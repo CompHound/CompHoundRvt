@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command CompHoundRvt</Text>
+    <Description>Some description for CompHoundRvt</Description>
+    <Assembly>CompHoundRvt.dll</Assembly>
+    <FullClassName>CompHoundRvt.Command</FullClassName>
+    <ClientId>fb26d856-9a00-4a76-81c3-15720806a19f</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
