@@ -5,8 +5,8 @@ Revit add-in to populate the
 universal component and asset usage analysis, report and visualisation node and mongo web server.
 
 For more information, please refer to
-[The 3D Web Coder](http://the3dwebcoder.typepad.com),
-[The Building Coder](http://thebuildingcoder.typepad.com) and
+[The 3D Web Coder](http://the3dwebcoder.typepad.com) and
+[The Building Coder](http://thebuildingcoder.typepad.com).
 
 
 ## Author
