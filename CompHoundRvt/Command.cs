@@ -18,77 +18,13 @@ namespace CompHoundRvt
   [Transaction( TransactionMode.ReadOnly )]
   public class Command : IExternalCommand
   {
-    /// <summary>
-    /// Return the midpoint between two points.
-    /// </summary>
-    public static XYZ Midpoint( XYZ p, XYZ q )
-    {
-      return 0.5 * ( p + q );
-    }
-
-    /// <summary>
-    /// Return a location point for a given element,
-    /// if one can be determined, regardless of whether
-    /// its Location property is a point or a curve.
-    /// </summary>
-    XYZ GetLocation( Element e )
-    {
-      XYZ p = null;
-
-      Location x = e.Location;
-      
-      if( null == x )
-      {
-        BoundingBoxXYZ bb = e.get_BoundingBox( null );
-      
-        if( null != bb )
-        {
-          p = Midpoint( bb.Min, bb.Max );
-        }
-      }
-      else
-      {
-        LocationPoint lp = x as LocationPoint;
-        if( null != lp )
-        {
-          p = lp.Point;
-        }
-        else
-        {
-          LocationCurve lc = x as LocationCurve;
-          if( null != lc )
-          {
-            Curve c = lc.Curve;
-            p = Midpoint( c.GetEndPoint( 0 ), c.GetEndPoint( 1 ) );
-          }
-        }
-      }
-      return p;
-    }
-
-    /// <summary>
-    /// Return a JSON string representing a dictionary
-    /// of the given parameter names and values.
-    /// </summary>
-    string GetPropertiesJson(
-      IList<Parameter> parameters )
-    {
-      int n = parameters.Count;
-      List<string> a = new List<string>( n );
-      foreach( Parameter p in parameters )
-      {
-        a.Add( string.Format( "\"{0}\":\"{1}\"",
-          p.Definition.Name, p.AsValueString() ) );
-      }
-      string s = string.Join( ",", a );
-      return "{" + s + "}";
-    }
-
+    #region Obsolete code before using RestSharp
     /// <summary>
     /// Retrieve the family instance data to store in 
     /// the external database for the given component
     /// and return it as a dictionary in a JSON 
     /// formatted string.
+    /// Obsolete, replaced by GetInstanceData method.
     /// </summary>
     string GetComponentDataJson(
       FamilyInstance a,
@@ -97,12 +33,12 @@ namespace CompHoundRvt
       Document doc = a.Document;
       FamilySymbol symbol = a.Symbol;
 
-      XYZ location = GetLocation( a );
+      XYZ location = Util.GetLocation( a );
 
       XYZ geolocation = geoTransform.OfPoint( 
         location );
 
-      string properties = GetPropertiesJson( 
+      string properties = Util.GetPropertiesJson( 
         a.GetOrderedParameters() );
 
       // /a/src/web/CompHoundWeb/model/instance.js
@@ -149,6 +85,7 @@ namespace CompHoundRvt
     /// Retrieve the family instance data to store in 
     /// the external database for the given component
     /// and return it as a dictionary-like object.
+    /// Obsolete, replaced by InstanceData class.
     /// </summary>
     object GetInstanceData(
       FamilyInstance a,
@@ -165,7 +102,7 @@ namespace CompHoundRvt
         ? "-1"
         : doc.GetElement( a.LevelId ).Name;
 
-      XYZ location = GetLocation( a );
+      XYZ location = Util.GetLocation( a );
 
       Debug.Assert( null != location,
         "expected valid location" );
@@ -173,7 +110,7 @@ namespace CompHoundRvt
       XYZ geolocation = geoTransform.OfPoint( 
         location );
 
-      string properties = GetPropertiesJson( 
+      string properties = Util.GetPropertiesJson( 
         a.GetOrderedParameters() );
 
       // /a/src/web/CompHoundWeb/model/instance.js
@@ -209,45 +146,7 @@ namespace CompHoundRvt
       
       return data;
     }
-
-    /// <summary>
-    /// Return the project location transform, cf.
-    /// https://github.com/jeremytammik/SetoutPoints
-    /// </summary>
-    Transform GetProjectLocationTransform( 
-      Document doc )
-    {
-      // Retrieve the active project location position.
-
-      ProjectPosition projectPosition
-        = doc.ActiveProjectLocation.get_ProjectPosition(
-          XYZ.Zero );
-
-      // Create a translation vector for the offsets
-
-      XYZ translationVector = new XYZ(
-        projectPosition.EastWest,
-        projectPosition.NorthSouth,
-        projectPosition.Elevation );
-
-      Transform translationTransform
-        = Transform.CreateTranslation(
-          translationVector );
-
-      // Create a rotation for the angle about true north
-
-      Transform rotationTransform
-        = Transform.CreateRotation(
-          XYZ.BasisZ, projectPosition.Angle );
-
-      // Combine the transforms 
-
-      Transform finalTransform
-        = translationTransform.Multiply(
-          rotationTransform );
-
-      return finalTransform;
-    }
+    #endregion // Obsolete code before using RestSharp
 
     public Result Execute(
       ExternalCommandData commandData,
@@ -259,7 +158,7 @@ namespace CompHoundRvt
       Document doc = uiapp.ActiveUIDocument.Document;
 
       Transform projectLocationTransform
-        = GetProjectLocationTransform( doc );
+        = Util.GetProjectLocationTransform( doc );
 
       // Loop through all family instance elements
       // and export their data.

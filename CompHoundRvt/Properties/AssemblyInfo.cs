@@ -32,5 +32,9 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion( "2016.0.0.0" )]
-[assembly: AssemblyFileVersion( "2016.0.0.0" )]
+//
+// 2015-09-10 2016.0.0.0 initial implementation based on pre-RestSharp FireRating sample
+// 2015-09-16 2016.0.0.1 upgrading towards post-RestSharp FireRating sample, implemented InstanceData class
+
+[assembly: AssemblyVersion( "2016.0.0.1" )]
+[assembly: AssemblyFileVersion( "2016.0.0.1" )]
