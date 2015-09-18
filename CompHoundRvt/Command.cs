@@ -167,14 +167,14 @@ namespace CompHoundRvt
         = new FilteredElementCollector( doc )
           .OfClass( typeof( FamilyInstance ) );
 
-      object instanceData;
+      InstanceData instanceData;
       string jsonResponse;
 
       foreach( FamilyInstance e in instances )
       {
         Debug.Print( e.Id.IntegerValue.ToString() );
 
-        instanceData = GetInstanceData( e,
+        instanceData = new InstanceData( e,
           projectLocationTransform );
 
         jsonResponse = Util.Put(
