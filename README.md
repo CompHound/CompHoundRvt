@@ -4,9 +4,19 @@ Revit add-in to populate the
 [CompHound](https://github.com/CompHound/CompHoundWeb) cloud-based
 universal component and asset usage analysis, report and visualisation node and mongo web server.
 
-For more information, please refer to
-[The 3D Web Coder](http://the3dwebcoder.typepad.com) and
-[The Building Coder](http://thebuildingcoder.typepad.com).
+This project is based on and derived from the node.js mongodb web server for the FireRating in the Cloud sample, consisting of the
+[FireRatingCloud](https://github.com/jeremytammik/FireRatingCloud) C# .NET REST API client Revit add-in and the
+[fireratingdb](https://github.com/jeremytammik/firerating) Node.js mongoDB web server.
+
+In addition to that, this project also sports a user interface, including
+[Autodesk View and Data API](https://developer.autodesk.com) 2D and 3D model analysis, viewing and navigation functionality.
+
+For more information, please refer to the
+[CompHound project landing page](https://github.com/CompHound/CompHound.github.io),
+[The 3D Web Coder](http://the3dwebcoder.typepad.com),
+[The Building Coder](http://thebuildingcoder.typepad.com) and
+the detailed articles describing the entire project implementation and evolution.
+
 
 
 ## Author
