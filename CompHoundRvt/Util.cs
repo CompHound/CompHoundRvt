@@ -190,11 +190,12 @@ namespace CompHoundRvt
 
       request.AddBody( data ); // uses JsonSerializer
 
+      // Didn't work for me
       //request.AddObject( data ); // http://matthewschrager.com/2013/02/19/restsharp-post-body/
 
-      // POST params instead of body is a lot more 
-      // efficient since there's no serialization to 
-      // JSON.
+      // POST params instead of body is more efficient 
+      // since there's no serialization to JSON.
+      // But our data is a bit large for that.
       //request.AddParameter("A", "foo");
       //request.AddParameter("B", "bar");
 

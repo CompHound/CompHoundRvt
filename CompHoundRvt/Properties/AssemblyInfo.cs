@@ -39,6 +39,7 @@ using System.Runtime.InteropServices;
 // 2015-09-26 2016.0.0.3 added view and data api urn and error handling for connection failure
 // 2015-09-26 2016.0.0.4 improved error handling and updated to new node server port
 // 2015-09-26 2016.0.0.4 added count of uploaded instances
+// 2015-09-26 2016.0.0.4 in InstanceData class expose public properties to serialise 
 //
 [assembly: AssemblyVersion( "2016.0.0.4" )]
 [assembly: AssemblyFileVersion( "2016.0.0.4" )]
