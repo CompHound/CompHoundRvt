@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Autodesk.Revit.DB;
 using RestSharp;
 using Parameter = Autodesk.Revit.DB.Parameter;
+using System.Diagnostics;
 #endregion // Namespaces
 
 namespace CompHoundRvt
@@ -172,9 +173,10 @@ namespace CompHoundRvt
     /// PUT JSON document data into 
     /// the specified mongoDB collection.
     /// </summary>
-    public static string Put(
+    public static bool Put(
       string collection_name_and_id,
-      InstanceData data )
+      InstanceData data,
+      out string result )
     {
       var client = new RestClient( RestApiBaseUrl );
 
@@ -187,9 +189,25 @@ namespace CompHoundRvt
 
       IRestResponse response = client.Execute( request );
 
-      var content = response.Content; // raw content as string
+      bool rc = false;
 
-      return content;
+      result = response.ErrorMessage;
+
+      if( 0 < result.Length )
+      {
+        //if( response.ErrorMessage.Equals(
+        //  "Unable to connect to the remote server" ) )
+        //  "does the database exist at all?"
+
+        Debug.Print( "HTTP PUT error: " + result );
+      }
+      else
+      {
+        result = response.Content; // raw content as string
+
+        rc = result.Equals( "Accepted" );
+      }
+      return rc;
     }
     #endregion // HTTP Access
   }

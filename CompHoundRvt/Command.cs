@@ -167,8 +167,9 @@ namespace CompHoundRvt
         = new FilteredElementCollector( doc )
           .OfClass( typeof( FamilyInstance ) );
 
+      Result rc = Result.Succeeded;
+
       InstanceData instanceData;
-      string jsonResponse;
 
       foreach( FamilyInstance e in instances )
       {
@@ -177,12 +178,14 @@ namespace CompHoundRvt
         instanceData = new InstanceData( e,
           projectLocationTransform );
 
-        jsonResponse = Util.Put(
-          "instances/" + e.UniqueId, instanceData );
-
-        Debug.Print( jsonResponse );
+        if( !Util.Put( "instances/" + e.UniqueId,
+          instanceData, out message ) )
+        {
+          rc = Result.Failed;
+          break;
+        }
       }
-      return Result.Succeeded;
+      return rc;
     }
   }
 }

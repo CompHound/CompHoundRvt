@@ -36,7 +36,7 @@ using System.Runtime.InteropServices;
 // 2015-09-10 2016.0.0.0 initial implementation based on pre-RestSharp FireRating sample
 // 2015-09-16 2016.0.0.1 upgrading towards post-RestSharp FireRating sample, implemented InstanceData class
 // 2015-09-16 2016.0.0.2 completed upgrade to post-RestSharp FireRating sample https://github.com/jeremytammik/FireRatingCloud/releases/tag/2016.0.0.13
-// 2015-09-26 2016.0.0.3 added view and data api urn
+// 2015-09-26 2016.0.0.3 added view and data api urn and error handling for connection failure
 //
 [assembly: AssemblyVersion( "2016.0.0.3" )]
 [assembly: AssemblyFileVersion( "2016.0.0.3" )]
