@@ -15,6 +15,7 @@ namespace CompHoundRvt
     string _id; // : UniqueId // suppress automatic generation
     string project;
     string path;
+    string urn; // populated later
     string family;
     string symbol;
     string category;
@@ -74,6 +75,7 @@ namespace CompHoundRvt
       _id = a.UniqueId;
       project = doc.Title;
       path = doc.PathName;
+      urn = string.Empty;
       family = fs.FamilyName;
       symbol = fs.Name;
       category = cat.Name;
