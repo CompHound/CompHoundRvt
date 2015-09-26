@@ -141,7 +141,7 @@ namespace CompHoundRvt
 
     // HTTP access constants.
 
-    const string _base_url_local = "http://127.0.0.1:3001";
+    const string _base_url_local = "http://127.0.0.1:8042";
     const string _base_url_global = "http://comphound.herokuapp.com";
     const string _api_version = "api/v1";
 
@@ -189,23 +189,22 @@ namespace CompHoundRvt
 
       IRestResponse response = client.Execute( request );
 
-      bool rc = false;
+      bool rc = System.Net.HttpStatusCode.Accepted
+        == response.StatusCode;
 
-      result = response.ErrorMessage;
-
-      if( 0 < result.Length )
+      if( rc )
+      {
+        result = response.Content; // raw content as string
+      }
+      else
       {
         //if( response.ErrorMessage.Equals(
         //  "Unable to connect to the remote server" ) )
         //  "does the database exist at all?"
 
-        Debug.Print( "HTTP PUT error: " + result );
-      }
-      else
-      {
-        result = response.Content; // raw content as string
+        result = response.ErrorMessage;
 
-        rc = result.Equals( "Accepted" );
+        Debug.Print( "HTTP PUT error: " + result );
       }
       return rc;
     }

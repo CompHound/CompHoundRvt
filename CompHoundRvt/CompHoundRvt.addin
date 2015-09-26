@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
   <AddIn Type="Command">
-    <Text>CompHound: Upload</Text>
+    <Text>CompHound Upload</Text>
     <Description>Upload family instance component occurrences to CompHound database</Description>
     <Assembly>CompHoundRvt.dll</Assembly>
     <FullClassName>CompHoundRvt.Command</FullClassName>
