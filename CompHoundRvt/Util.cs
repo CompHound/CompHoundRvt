@@ -185,7 +185,18 @@ namespace CompHoundRvt
 
       request.RequestFormat = DataFormat.Json;
 
+      // Check what we actually send.
+      //Debug.Print( request.JsonSerializer.Serialize( data ) );
+
       request.AddBody( data ); // uses JsonSerializer
+
+      //request.AddObject( data ); // http://matthewschrager.com/2013/02/19/restsharp-post-body/
+
+      // POST params instead of body is a lot more 
+      // efficient since there's no serialization to 
+      // JSON.
+      //request.AddParameter("A", "foo");
+      //request.AddParameter("B", "bar");
 
       IRestResponse response = client.Execute( request );
 

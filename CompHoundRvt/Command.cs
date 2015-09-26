@@ -171,6 +171,8 @@ namespace CompHoundRvt
 
       InstanceData instanceData;
 
+      int n = 0;
+
       foreach( FamilyInstance e in instances )
       {
         Debug.Print( e.Id.IntegerValue.ToString() );
@@ -184,7 +186,12 @@ namespace CompHoundRvt
           rc = Result.Failed;
           break;
         }
+        ++n;
       }
+      Debug.Print( 
+        "CompHound uploaded {0} instance{1}.", 
+        n, ( 1 == n ? "" : "s" ) );
+
       return rc;
     }
   }

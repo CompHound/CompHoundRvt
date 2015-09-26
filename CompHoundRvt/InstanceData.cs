@@ -12,20 +12,20 @@ namespace CompHoundRvt
   /// </summary>
   class InstanceData
   {
-    string _id; // : UniqueId // suppress automatic generation
-    string project;
-    string path;
-    string urn; // populated later
-    string family;
-    string symbol;
-    string category;
-    string level;
-    double x;
-    double y;
-    double z;
-    double easting;
-    double northing;
-    string properties; // : String // json dictionary of instance properties and values
+    public string _id {get;set;} // : UniqueId // suppress automatic generation
+    public string project {get;set;}
+    public string path {get;set;}
+    public string urn {get;set;} // populated later
+    public string family {get;set;}
+    public string symbol {get;set;}
+    public string category {get;set;}
+    public string level {get;set;}
+    public double x {get;set;}
+    public double y {get;set;}
+    public double z {get;set;}
+    public double easting {get;set;}
+    public double northing {get;set;}
+    public string properties {get;set;} // : String // json dictionary of instance properties and values
 
     public InstanceData()
     {
