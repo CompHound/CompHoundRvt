@@ -40,6 +40,7 @@ using System.Runtime.InteropServices;
 // 2015-09-26 2016.0.0.4 improved error handling and updated to new node server port
 // 2015-09-26 2016.0.0.4 added count of uploaded instances
 // 2015-09-26 2016.0.0.4 in InstanceData class expose public properties to serialise 
+// 2015-09-30 2016.0.0.5 convert location to millimetres and round northing and easting to eight decimal places
 //
-[assembly: AssemblyVersion( "2016.0.0.4" )]
-[assembly: AssemblyFileVersion( "2016.0.0.4" )]
+[assembly: AssemblyVersion( "2016.0.0.5" )]
+[assembly: AssemblyFileVersion( "2016.0.0.5" )]
