@@ -4,6 +4,7 @@ using Autodesk.Revit.DB;
 using RestSharp;
 using Parameter = Autodesk.Revit.DB.Parameter;
 using System.Diagnostics;
+using System;
 #endregion // Namespaces
 
 namespace CompHoundRvt
@@ -38,6 +39,47 @@ namespace CompHoundRvt
       return "{" + s + "}";
     }
     #endregion // String Formatting
+
+    #region Unit Conversion
+    /// <summary>
+    /// Round degrees of latitude and longitude.
+    /// What is the precision of northing and easting?
+    /// One degree is ca. 100km, according to 
+    /// http://stackoverflow.com/questions/4102520/how-to-transform-a-distance-from-degrees-to-metres
+    /// 1 mm = 100km / 100000000 = 100km / 10^8,
+    /// so only eight decimal places are of interest.
+    /// </summary>
+    public static double RoundDegreesNorthOrEast(
+      double d )
+    {
+      return Math.Round( d, 8,
+        MidpointRounding.AwayFromZero );
+    }
+
+    /// <summary>
+    /// Conversion factor from feet to millimetres.
+    /// </summary>
+    const double _feet_to_mm = 25.4 * 12;
+
+    /// <summary>
+    /// Convert a given length in feet to millimetres.
+    /// </summary>
+    public static int ConvertFeetToMillimetres(
+      double d )
+    {
+      //return (int) ( _feet_to_mm * d + 0.5 );
+      return (int) Math.Round( _feet_to_mm * d,
+        MidpointRounding.AwayFromZero );
+    }
+
+    /// <summary>
+    /// Convert a given length in millimetres to feet.
+    /// </summary>
+    public static double ConvertMillimetresToFeet( int d )
+    {
+      return d / _feet_to_mm;
+    }
+    #endregion // Unit Conversion
 
     #region Element and Project Location
     /// <summary>
@@ -137,7 +179,7 @@ namespace CompHoundRvt
     /// <summary>
     /// HTTP access constant to toggle between local and global server.
     /// </summary>
-    public static bool UseLocalServer = true;
+    public static bool UseLocalServer = false;
 
     // HTTP access constants.
 
