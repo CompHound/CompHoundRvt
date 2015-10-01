@@ -35,10 +35,10 @@ namespace CompHoundRvt
 
       XYZ location = Util.GetLocation( a );
 
-      XYZ geolocation = geoTransform.OfPoint( 
+      XYZ geolocation = geoTransform.OfPoint(
         location );
 
-      string properties = Util.GetPropertiesJson( 
+      string properties = Util.GetPropertiesJson(
         a.GetOrderedParameters() );
 
       // /a/src/web/CompHoundWeb/model/instance.js
@@ -75,9 +75,9 @@ namespace CompHoundRvt
         Util.RealString( location.Y ),
         Util.RealString( location.Z ),
         Util.RealString( geolocation.X ),
-        Util.RealString( geolocation.Y ), 
+        Util.RealString( geolocation.Y ),
         properties );
-      
+
       return "{" + s + "}";
     }
 
@@ -95,7 +95,7 @@ namespace CompHoundRvt
       FamilySymbol symbol = a.Symbol;
       Category cat = a.Category;
 
-      Debug.Assert( null != cat, 
+      Debug.Assert( null != cat,
         "expected valid category" );
 
       string levelName = ElementId.InvalidElementId == a.LevelId
@@ -107,10 +107,10 @@ namespace CompHoundRvt
       Debug.Assert( null != location,
         "expected valid location" );
 
-      XYZ geolocation = geoTransform.OfPoint( 
+      XYZ geolocation = geoTransform.OfPoint(
         location );
 
-      string properties = Util.GetPropertiesJson( 
+      string properties = Util.GetPropertiesJson(
         a.GetOrderedParameters() );
 
       // /a/src/web/CompHoundWeb/model/instance.js
@@ -128,7 +128,8 @@ namespace CompHoundRvt
       // northing   : Number
       // properties : String // json dictionary of instance properties and values
 
-      object data = new {
+      object data = new
+      {
         _id = a.UniqueId,
         project = doc.Title,
         path = doc.PathName,
@@ -143,7 +144,7 @@ namespace CompHoundRvt
         northing = geolocation.Y,
         properties = properties
       };
-      
+
       return data;
     }
     #endregion // Obsolete code before using RestSharp
@@ -188,8 +189,8 @@ namespace CompHoundRvt
         }
         ++n;
       }
-      Debug.Print( 
-        "CompHound uploaded {0} instance{1}.", 
+      Debug.Print(
+        "CompHound uploaded {0} instance{1}.",
         n, ( 1 == n ? "" : "s" ) );
 
       return rc;

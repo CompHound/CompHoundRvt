@@ -11,12 +11,10 @@ This project is based on and derived from the node.js mongodb web server for the
 In addition to that, this project also sports a user interface, including
 [Autodesk View and Data API](https://developer.autodesk.com) 2D and 3D model analysis, viewing and navigation functionality.
 
-For more information, please refer to the
-[CompHound project landing page](https://github.com/CompHound/CompHound.github.io),
-[The 3D Web Coder](http://the3dwebcoder.typepad.com),
-[The Building Coder](http://thebuildingcoder.typepad.com) and
-the detailed articles describing the entire project implementation and evolution.
-
+For further information,
+[trying it out live](https://github.com/CompHound/CompHound.github.io#try-it-out-live) and
+detailed articles describing the entire project implementation and evolution, please refer to
+the [CompHound project landing page](https://github.com/CompHound/CompHound.github.io).
 
 
 ## Author
