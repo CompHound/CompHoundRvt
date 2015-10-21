@@ -19,6 +19,11 @@ the [CompHound project landing page](https://github.com/CompHound/CompHound.gith
 and [web server](https://github.com/CompHound/CompHoundWeb).
 
 
+## To Do
+
+- Progress bar
+
+
 ## Author
 
 Jeremy Tammik,
