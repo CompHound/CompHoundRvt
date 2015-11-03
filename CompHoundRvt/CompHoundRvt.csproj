@@ -44,6 +44,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>lib\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\a\vs\CompHoundRvt\CompHoundRvt\lib\RestSharp.dll</HintPath>
@@ -57,16 +60,21 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Command.cs" />
     <Compile Include="InstanceData.cs" />
+    <Compile Include="MultiFileUploader\MultiFileUploader-Models.cs" />
+    <Compile Include="MultiFileUploader\MultiFileUploader-Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="CompHoundRvt.addin" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterClean">
     <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2016\CompHoundRvt.addin" />
