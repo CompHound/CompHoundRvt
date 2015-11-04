@@ -8,6 +8,7 @@ using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Selection;
+using System.IO;
 #endregion
 
 namespace CompHoundRvt
@@ -180,7 +181,7 @@ namespace CompHoundRvt
       string client_key;
       string client_secret;
 
-      if( !Util.GetLvmCredentials( 
+      if( !Util.GetLvmCredentials(
         out client_key, out client_secret ) )
       {
         message = _key_secret_prompt;
@@ -192,7 +193,21 @@ namespace CompHoundRvt
 
       ArrayList fileList = new ArrayList();
       //fileList.Add( asm.FullFileName );
-      fileList.Add( doc.PathName );
+      //fileList.Add( doc.PathName );
+
+      // Revit blocks the current file.
+      // Copy it to a location with no spaces in the name.
+      // From then on, the whole upload process could be spawned off into a separate thread.
+      // Well, no, we do need the URN.
+
+      string filename = Path.Combine( 
+        Path.GetTempPath(), 
+        Path.GetFileName( doc.PathName ) );
+      filename.Replace( ' ', '_' );
+      Debug.Print( filename );
+      File.Delete( filename );
+      File.Copy( doc.PathName, filename, true );
+      fileList.Add( filename );
 
       //foreach( Document oRefDoc in asm.AllReferencedDocuments )
       //{
@@ -203,7 +218,16 @@ namespace CompHoundRvt
         "https://developer.api.autodesk.com" );
 
       string urn = u.UploadFilesWithReferences(
-        client_key, client_secret, "comphoundrvtbucket", fileList, null, true );
+        client_key, client_secret, "comphoundrvtbucket",
+        fileList, null, true );
+
+      if( string.IsNullOrEmpty( urn ) )
+      {
+        message = "View and Data API upload and "
+          + "translation failed.";
+
+        return Result.Failed;
+      }
 
       Transform projectLocationTransform
         = Util.GetProjectLocationTransform( doc );

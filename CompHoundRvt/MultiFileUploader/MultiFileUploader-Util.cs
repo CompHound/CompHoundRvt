@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Collections;
 using System.Windows.Forms;
 using MultiFileUploader.Models;
+using System.Diagnostics;
 
 // Requires references to the following assemblies:
 // - System.Web
@@ -137,7 +138,6 @@ namespace MultiFileUploader
       return ( respBC.StatusCode == System.Net.HttpStatusCode.OK );
     }
 
-
     public bool UploadFile( string bucketKey, string accessToken, string file, out string base64URN )
     {
       //Do not use HttpUtility.UrlEncode, it does not encode charactor '+' 
@@ -146,8 +146,16 @@ namespace MultiFileUploader
       base64URN = String.Empty;
 
       string objectKey = Path.GetFileName( file );
-
-      FileStream filestream = File.Open( file, FileMode.Open, FileAccess.Read );
+      FileStream filestream;
+      try
+      {
+        filestream = File.Open( file, FileMode.Open, FileAccess.Read );
+      }
+      catch( Exception ex )
+      {
+        Debug.Print( ex.Message );
+        return false;
+      }
       byte[] fileData = null;
       int nlength = (int) filestream.Length;
       using( BinaryReader reader = new BinaryReader( filestream ) )
@@ -163,7 +171,7 @@ namespace MultiFileUploader
       req.Method = Method.PUT;
       req.AddParameter( "Authorization", "Bearer " + accessToken, ParameterType.HttpHeader );
       req.AddParameter( "Content-Type", contentType );
-      req.AddParameter( "Content-Length", nlength );
+      //req.AddParameter( "Content-Length", nlength ); // Cyrille says to never use this
       req.AddParameter( "requestBody", fileData, ParameterType.RequestBody );
 
       IRestResponse resp = m_client.Execute( req );
@@ -179,7 +187,10 @@ namespace MultiFileUploader
       }
       else
       {
-        MessageBox.Show( "Upload failed " + file + "  to bucket  " + bucketKey );
+        MessageBox.Show( "Upload to bucket '" 
+          + bucketKey + "' failed for file '" 
+          + file + "'.", "CompHound", 
+          MessageBoxButtons.OK, MessageBoxIcon.Stop );
 
         return false;
       }
@@ -227,7 +238,7 @@ namespace MultiFileUploader
             // init root_urn with the first file as default
             if( success_counter == 0 )
             {
-              success_counter++;
+              ++success_counter;
               root_urn = file_urn;
               real_root_file = file;
             }
@@ -251,6 +262,11 @@ namespace MultiFileUploader
               }
             }
           }
+        }
+
+        if( 0 == success_counter )
+        {
+          return null;
         }
 
         // set up the reference

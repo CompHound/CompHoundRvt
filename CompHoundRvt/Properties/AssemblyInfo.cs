@@ -43,6 +43,7 @@ using System.Runtime.InteropServices;
 // 2015-09-30 2016.0.0.5 convert location to millimetres and round northing and easting to eight decimal places
 // 2015-11-04 2016.0.0.6 integrated MultiFileUploader
 // 2015-11-04 2016.0.0.6 implemented call to MultiFileUploader and Util.GetLvmCredentials
+// 2015-11-04 2016.0.0.6 added error checking and handling
 //
 [assembly: AssemblyVersion( "2016.0.0.6" )]
 [assembly: AssemblyFileVersion( "2016.0.0.6" )]
