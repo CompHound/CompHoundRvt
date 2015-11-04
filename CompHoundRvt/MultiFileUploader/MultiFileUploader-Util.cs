@@ -173,6 +173,7 @@ namespace MultiFileUploader
       req.AddParameter( "Content-Type", contentType );
       //req.AddParameter( "Content-Length", nlength ); // Cyrille says to never use this
       req.AddParameter( "requestBody", fileData, ParameterType.RequestBody );
+      req.Timeout = 1000 * 60 * 60;
 
       IRestResponse resp = m_client.Execute( req );
       if( resp.StatusCode == System.Net.HttpStatusCode.OK )

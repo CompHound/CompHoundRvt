@@ -44,6 +44,8 @@ using System.Runtime.InteropServices;
 // 2015-11-04 2016.0.0.6 integrated MultiFileUploader
 // 2015-11-04 2016.0.0.6 implemented call to MultiFileUploader and Util.GetLvmCredentials
 // 2015-11-04 2016.0.0.6 added error checking and handling
+// 2015-11-04 2016.0.0.6 file upload fails, debugging with cyrille
+// 2015-11-04 2016.0.0.6 added file upload timeout, raised it to 1 hour
 //
 [assembly: AssemblyVersion( "2016.0.0.6" )]
 [assembly: AssemblyFileVersion( "2016.0.0.6" )]
