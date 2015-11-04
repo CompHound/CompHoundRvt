@@ -170,6 +170,27 @@ namespace CompHoundRvt
     }
     #endregion // Element and Project Location
 
+    #region Retrieve LVM Credentials
+    const string _env_name_key = "COMPHOUND_CONSUMERKEY";
+    const string _env_name_secret = "COMPHOUND_CONSUMERSECRET";
+
+    /// <summary>
+    /// Retrieve LVM credentials from environment variables.
+    /// </summary>
+    public static bool GetLvmCredentials( 
+      out string key, 
+      out string secret )
+    {
+      key = Environment.GetEnvironmentVariable( 
+        _env_name_key );
+
+      secret = Environment.GetEnvironmentVariable( 
+        _env_name_secret );
+
+      return null != key && null != secret;
+    }
+    #endregion // Retrieve LVM Credentials
+
     #region HTTP Access
     /// <summary>
     /// Timeout for HTTP calls.

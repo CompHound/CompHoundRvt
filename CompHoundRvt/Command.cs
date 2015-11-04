@@ -1,5 +1,6 @@
 #region Namespaces
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Autodesk.Revit.ApplicationServices;
@@ -18,6 +19,14 @@ namespace CompHoundRvt
   [Transaction( TransactionMode.ReadOnly )]
   public class Command : IExternalCommand
   {
+    const string _key_secret_prompt
+      = "Please ensure that the CompHound View and Data "
+      + "API client key and secret are stored in the "
+      + "Windows system environment variables "
+      + "COMPHOUND_CONSUMERKEY and "
+      + "COMPHOUND_CONSUMERSECRET before launching "
+      + "this command.";
+
     #region Obsolete code before using RestSharp
     /// <summary>
     /// Retrieve the family instance data to store in 
@@ -158,6 +167,44 @@ namespace CompHoundRvt
       Application app = uiapp.Application;
       Document doc = uiapp.ActiveUIDocument.Document;
 
+      if( string.IsNullOrEmpty( doc.PathName ) )
+      {
+        message = "Please store RVT file "
+          + "before launching this command";
+
+        return Result.Failed;
+      }
+
+      // Retrieve LMV credentials.
+
+      string client_key;
+      string client_secret;
+
+      if( !Util.GetLvmCredentials( 
+        out client_key, out client_secret ) )
+      {
+        message = _key_secret_prompt;
+        return Result.Failed;
+      }
+
+      // Upload and translate model file.
+      // Todo: add linked files as well.
+
+      ArrayList fileList = new ArrayList();
+      //fileList.Add( asm.FullFileName );
+      fileList.Add( doc.PathName );
+
+      //foreach( Document oRefDoc in asm.AllReferencedDocuments )
+      //{
+      //  fileList.Add( oRefDoc.FullDocumentName );
+      //}
+
+      MultiFileUploader.Util u = new MultiFileUploader.Util(
+        "https://developer.api.autodesk.com" );
+
+      string urn = u.UploadFilesWithReferences(
+        client_key, client_secret, "comphoundrvtbucket", fileList, null, true );
+
       Transform projectLocationTransform
         = Util.GetProjectLocationTransform( doc );
 
@@ -179,7 +226,7 @@ namespace CompHoundRvt
         Debug.Print( e.Id.IntegerValue.ToString() );
 
         instanceData = new InstanceData( e,
-          projectLocationTransform );
+          projectLocationTransform, urn );
 
         if( !Util.Put( "instances/" + e.UniqueId,
           instanceData, out message ) )

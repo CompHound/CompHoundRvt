@@ -15,7 +15,7 @@ namespace CompHoundRvt
     public string _id { get; set; } // : UniqueId // suppress automatic generation
     public string project { get; set; }
     public string path { get; set; }
-    public string urn { get; set; } // populated later
+    public string urn { get; set; }
     public string family { get; set; }
     public string symbol { get; set; }
     public string category { get; set; }
@@ -33,7 +33,8 @@ namespace CompHoundRvt
 
     public InstanceData(
       FamilyInstance a,
-      Transform geoTransform )
+      Transform geoTransform,
+      string model_urn )
     {
       Document doc = a.Document;
       FamilySymbol fs = a.Symbol;
@@ -76,7 +77,7 @@ namespace CompHoundRvt
       _id = a.UniqueId;
       project = doc.Title;
       path = doc.PathName;
-      urn = string.Empty;
+      urn = model_urn;
       family = fs.FamilyName;
       symbol = fs.Name;
       category = cat.Name;
